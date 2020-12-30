@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header Test 监测header组件样式是否发生变换 1`] = `
+<div class="header">
+  <div class="header-contain">
+    TodoList
+    <input type="text" data-test="input" placeholder="input TodoItem">
+  </div>
+</div>
+`;
