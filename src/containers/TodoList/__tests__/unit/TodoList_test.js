@@ -20,12 +20,23 @@ describe('todoList test', () => {
     expect(undoList.props('list')).toBeTruthy()
   })
 
-  it('todolist 触发deleteUndoItem事件', () => {
+  it('触发deleteUndoItem事件', () => {
     const wrapper = shallowMount(TodoList)
     wrapper.setData({
       undoList: [1, 2, 3]
     })
-    wrapper.vm.deleteUndoTiem(1)
+    wrapper.vm.deleteUndoItem(1)
     expect(wrapper.vm.$data.undoList).toEqual([1, 3])
+  })
+
+  it('触发finishUndoItem事件', () => {
+    const wrapper = shallowMount(TodoList)
+    wrapper.setData({
+      undoList: [1, 2, 3],
+      finishList: []
+    })
+    wrapper.vm.finishUndoItem(1)
+    expect(wrapper.vm.$data.undoList).toEqual([1, 3])
+    expect(wrapper.vm.$data.finishList).toEqual([2])
   })
 })

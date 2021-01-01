@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -25,5 +25,9 @@ body {
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+body {
+  background-color: #cdcdcd;
 }
 </style>
