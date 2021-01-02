@@ -13,7 +13,7 @@
         data-test='item'
         v-for="(item, index) in list"
         :key="index"
-      >{{item}}</li>
+      >{{item.value}}</li>
     </ul>
   </div>
 </template>

@@ -14,7 +14,8 @@
       <ul class="list">
         <li
           v-for="(item, index) in list"
-          :key="item"
+          :key="item.value"
+          @click="editUndoItem(index)"
           data-test="undoItem"
           class="item"
         >
@@ -24,7 +25,18 @@
               data-test="finish"
               @click="undoItemFinish(index)"
             />
-            {{item}}
+            <div class="content">
+              <input
+                type="text"
+                data-test='input'
+                v-if="item.status === 'input'"
+                :value="item.value"
+                @blur="quitEdit"
+                @change="changeValue($event, index)"
+              >
+              <span v-else>{{item.value}}</span>
+            </div>
+
           </div>
           <span
             class="delete-button"
@@ -47,6 +59,18 @@ export default {
     },
     undoItemFinish (index) {
       this.$emit('finish', index)
+    },
+    editUndoItem (index) {
+      this.$emit('edit', index)
+    },
+    quitEdit () {
+      this.$emit('reset')
+    },
+    changeValue (event, index) {
+      this.$emit('changeValue', {
+        value: event.target.value,
+        index
+      })
     }
   }
 }
@@ -102,5 +126,9 @@ export default {
   border-radius: 10px;
   color: #000;
   background-color: #e6e6e6;
+}
+
+.content {
+  display: inline-block;
 }
 </style>

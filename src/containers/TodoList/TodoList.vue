@@ -6,8 +6,11 @@
       :list="undoList"
       @delete="deleteUndoItem"
       @finish="finishUndoItem"
+      @changeValue="changeValue"
+      @reset="reset"
+      @edit="edit"
     />
-    <finish-list :list='finishList'/>
+    <finish-list :list='finishList' />
   </div>
 </template>
 
@@ -26,7 +29,10 @@ export default {
   },
   methods: {
     addTodoItem (item) {
-      this.undoList.push(item)
+      this.undoList.push({
+        value: item,
+        status: 'div'
+      })
     },
     deleteUndoItem (index) {
       this.undoList.splice(index, 1)
@@ -34,6 +40,26 @@ export default {
     finishUndoItem (index) {
       const item = this.undoList.splice(index, 1)
       this.finishList.push(...item)
+    },
+    reset () {
+      for (let i = 0; i < this.undoList.length; i++) {
+        const item = this.undoList[i]
+        this.$set(item, 'status', 'div')
+      }
+    },
+    edit (index) {
+      for (let i = 0; i < this.undoList.length; i++) {
+        const item = this.undoList[i]
+        if (index === i) {
+          this.$set(item, 'status', 'input')
+        } else {
+          this.$set(item, 'status', 'div')
+        }
+      }
+    },
+    changeValue ({ index, value }) {
+      this.$set(this.undoList[index], 'value', value)
+      this.$set(this.undoList[index], 'status', 'div')
     }
   },
   components: {

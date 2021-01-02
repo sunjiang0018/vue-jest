@@ -68,4 +68,74 @@ describe('UndoList 组件测试', () => {
     }
     expect(wrapper)
   })
+  it('触发item的点击事件，触发edit', () => {
+    const wrapper = shallowMount(UndoList, {
+      propsData: {
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'div' },
+          { value: 3, status: 'div' }
+        ]
+      }
+    })
+
+    const items = findTestWrapper(wrapper, 'undoItem')
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items.at(i)
+      item.trigger('click')
+      expect(wrapper.emitted().edit[i][0]).toBe(i)
+    }
+  })
+
+  it('焦点离开时，触发reset', () => {
+    const wrapper = shallowMount(UndoList, {
+      propsData: {
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'input' },
+          { value: 3, status: 'div' }
+        ]
+      }
+    })
+    const input = findTestWrapper(wrapper, 'input').at(0)
+    input.trigger('blur')
+    expect(wrapper.emitted().reset).toBeTruthy()
+  })
+
+  it('进入编辑模式中，input内容等于value值', () => {
+    const wrapper = shallowMount(UndoList, {
+      propsData: {
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'input' },
+          { value: 3, status: 'div' }
+        ]
+      }
+    })
+
+    const input = findTestWrapper(wrapper, 'input').at(0)
+    expect(input.element.value).toEqual('2')
+  })
+  it('input触发change事件时，触发changeValue回调', () => {
+    const wrapper = shallowMount(UndoList, {
+      propsData: {
+        list: [
+          { value: 1, status: 'div' },
+          { value: 2, status: 'input' },
+          { value: 3, status: 'div' }
+        ]
+      }
+    })
+
+    const input = findTestWrapper(wrapper, 'input').at(0)
+    input.element.value = '123'
+    input.trigger('change')
+
+    expect(wrapper.emitted().changeValue).toBeTruthy()
+    expect(wrapper.emitted().changeValue[0][0]).toEqual({
+      value: '123',
+      index: 1
+    })
+  })
 })

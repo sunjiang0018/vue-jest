@@ -11,7 +11,9 @@ describe('todoList test', () => {
   it('todolist 触发addTodoItem事件', () => {
     const wrapper = shallowMount(TodoList)
     wrapper.vm.addTodoItem('inputValue Test')
-    expect(wrapper.vm.$data.undoList).toEqual(['inputValue Test'])
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { value: 'inputValue Test', status: 'div' }
+    ])
   })
 
   it('todolist 中Undolist 是否传递list参数', () => {
@@ -38,5 +40,56 @@ describe('todoList test', () => {
     wrapper.vm.finishUndoItem(1)
     expect(wrapper.vm.$data.undoList).toEqual([1, 3])
     expect(wrapper.vm.$data.finishList).toEqual([2])
+  })
+
+  it('触发edit事件', () => {
+    const wrapper = shallowMount(TodoList)
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'div' },
+        { value: 3, status: 'div' }
+      ]
+    })
+    wrapper.vm.edit(1)
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 2, status: 'input' },
+      { value: 3, status: 'div' }
+    ])
+  })
+
+  it('触发edit事件', () => {
+    const wrapper = shallowMount(TodoList)
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'input' },
+        { value: 3, status: 'div' }
+      ]
+    })
+    wrapper.vm.reset()
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 2, status: 'div' },
+      { value: 3, status: 'div' }
+    ])
+  })
+
+  it('触发changeValue事件', () => {
+    const wrapper = shallowMount(TodoList)
+    wrapper.setData({
+      undoList: [
+        { value: 1, status: 'div' },
+        { value: 2, status: 'input' },
+        { value: 3, status: 'div' }
+      ]
+    })
+    wrapper.vm.changeValue({ index: 1, value: 1234 })
+    expect(wrapper.vm.$data.undoList).toEqual([
+      { value: 1, status: 'div' },
+      { value: 1234, status: 'div' },
+      { value: 3, status: 'div' }
+    ])
   })
 })
