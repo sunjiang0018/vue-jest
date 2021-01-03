@@ -16,7 +16,7 @@
           v-for="(item, index) in list"
           :key="item.value"
           @click="editUndoItem(index)"
-          data-test="undoItem"
+          data-test="list-item"
           class="item"
         >
           <div>

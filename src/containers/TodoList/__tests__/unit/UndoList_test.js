@@ -29,11 +29,11 @@ describe('UndoList 组件测试', () => {
         list: [1, 2, 3]
       }
     })
-    let undoItems = findTestWrapper(wrapper, 'undoItem')
+    let undoItems = findTestWrapper(wrapper, 'list-item')
     expect(undoItems.length).toBe(3)
 
     await wrapper.setProps({ list: [] })
-    undoItems = findTestWrapper(wrapper, 'undoItem')
+    undoItems = findTestWrapper(wrapper, 'list-item')
     expect(undoItems.length).toBe(0)
   })
 
@@ -79,7 +79,7 @@ describe('UndoList 组件测试', () => {
       }
     })
 
-    const items = findTestWrapper(wrapper, 'undoItem')
+    const items = findTestWrapper(wrapper, 'list-item')
 
     for (let i = 0; i < items.length; i++) {
       const item = items.at(i)

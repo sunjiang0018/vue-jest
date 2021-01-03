@@ -6,11 +6,11 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit --watch",
-    "test:cov":"vue-cli-service test:unit --coverage",
+    "test:cov": "vue-cli-service test:unit --coverage",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.2",
     "vue": "^2.6.11"
   },
   "devDependencies": {
