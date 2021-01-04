@@ -18,9 +18,18 @@
 import Header from './components/Header'
 import UndoList from './components/UndoList'
 import FinishList from './components/FinishList'
+import axios from 'axios'
 
 export default {
   name: 'TodoList',
+  mounted () {
+    axios.get('/getUndoList.json')
+      .then(result => {
+        this.undoList = result.data
+      }).catch(e => {
+        console.log(e)
+      })
+  },
   data () {
     return {
       undoList: [],
