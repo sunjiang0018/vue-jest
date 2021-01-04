@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import TodoList from '@/containers/TodoList/TodoList'
 import { findTestWrapper } from '@/utils/testUtils'
+import store from '@/store/index'
 
 describe('TodoList 集成测试', () => {
   it(`
@@ -8,7 +9,9 @@ describe('TodoList 集成测试', () => {
     2、用户按下会车按钮
     3、列表项中增加相应的内容项
   `, async () => {
-    const wrapper = mount(TodoList)
+    const wrapper = mount(TodoList, {
+      store
+    })
     const inputElem = findTestWrapper(wrapper, 'header-input').at(0)
     const content = 'integration Test'
     inputElem.setValue(content)

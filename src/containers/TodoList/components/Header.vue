@@ -5,7 +5,8 @@
       <input
         type="text"
         data-test="header-input"
-        v-model="inputValue"
+        :value="inputValue"
+        @input="e => {changeInputValue(e.target.value)}"
         placeholder="input TodoItem"
         @keyup.enter="addTodoItem"
       />
@@ -15,18 +16,23 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'Header',
   data () {
     return {
-      inputValue: ''
+
     }
   },
+  computed: {
+    ...mapState(['inputValue'])
+  },
   methods: {
+    ...mapMutations(['changeInputValue']),
     addTodoItem () {
       if (this.inputValue) {
         this.$emit('add', this.inputValue)
-        this.inputValue = ''
+        this.changeInputValue('')
       }
     }
   }
@@ -34,15 +40,14 @@ export default {
 </script>
 
 <style>
-
-.header{
+.header {
   height: 50px;
   width: 100%;
   background-color: #333;
 }
 
-.header-contain{
-  width:  600px;
+.header-contain {
+  width: 600px;
   margin: 0 auto;
   color: #fff;
   line-height: 50px;
@@ -51,7 +56,7 @@ export default {
   justify-content: space-between;
 }
 
-.header-contain > input[type="text"]{
+.header-contain > input[type='text'] {
   width: 230px;
   margin: 5px 0;
   color: #333;
